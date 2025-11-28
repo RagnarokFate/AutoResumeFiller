@@ -1,2 +1,17 @@
-# Backend Python dependencies
-# To be populated in Story 1.2: Python Backend Scaffolding
+# Backend Python Dependencies for AutoResumeFiller
+# Story 1.2: FastAPI Backend Scaffolding
+
+# Core Framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# HTTP & Utilities
+python-multipart>=0.0.6
+python-dotenv>=1.0.0
+
+# Development Dependencies
+# Note: Testing tools (pytest, black, mypy, pylint) are configured 
+# in pyproject.toml [project.optional-dependencies] for project-wide use.
+# Install with: pip install -e ".[dev]" (future - Epic 1.6)

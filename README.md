@@ -117,37 +117,65 @@ source venv/bin/activate
 
 **3. Install Backend Dependencies**
 ```bash
-cd backend
-pip install -r requirements.txt
-cd ..
+# Install backend dependencies
+pip install -r backend/requirements.txt
 ```
 
 **4. Install GUI Dependencies**
 ```bash
-cd gui
-pip install -r requirements.txt
-cd ..
+# Install GUI dependencies
+pip install -r gui/requirements.txt
 ```
 
-**5. Run Backend (Development)**
+**5. Configure Environment (Optional)**
+
+The backend works with default settings. For custom configuration:
+
 ```bash
-# From project root
+# Copy environment template
+cp .env.example .env  # Unix/macOS
+copy .env.example .env  # Windows
+
+# Edit .env to customize settings (optional)
+```
+
+Default configuration:
+- API Host: `127.0.0.1` (localhost only)
+- API Port: `8765`
+- CORS Origins: `chrome-extension://*` (all extensions)
+
+**6. Run Backend (Development)**
+```bash
+# From project root, with auto-reload
 uvicorn backend.main:app --reload --host 127.0.0.1 --port 8765
 ```
 
-Backend will be available at `http://localhost:8765`. Test with:
+Backend will be available at `http://localhost:8765`. 
+
+**Verify Backend:**
+- **Health Check:** http://localhost:8765/api/status  
+  Expected: `{"status": "healthy", "version": "1.0.0", "timestamp": "..."}`
+- **API Documentation:** http://localhost:8765/docs (Swagger UI)
+- **Alternative Docs:** http://localhost:8765/redoc
+
+**7. Run Backend Tests**
 ```bash
-curl http://localhost:8765/api/status
-# Expected: {"status":"healthy","version":"1.0.0"}
+# Run all backend tests
+pytest backend/tests/ -v
+
+# Run with coverage report
+pytest backend/tests/ --cov=backend --cov-report=term-missing
 ```
 
-**6. Run GUI (Development)**
+Expected: 9/9 tests passing with >90% coverage on `backend/main.py`
+
+**8. Run GUI (Development)**
 ```bash
 # In a new terminal
 python gui/main.py
 ```
 
-**7. Load Chrome Extension (Development)**
+**9. Load Chrome Extension (Development)**
 1. Open Chrome and navigate to `chrome://extensions/`
 2. Enable "Developer mode" (toggle in top-right)
 3. Click "Load unpacked"
