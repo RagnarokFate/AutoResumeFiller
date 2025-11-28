@@ -41,7 +41,7 @@ development_status:
   1-1-project-initialization-repository-setup: done
   1-2-python-backend-scaffolding: done
   1-3-chrome-extension-manifest-basic-structure: done
-  1-4-pyqt5-gui-application-shell: review
+  1-4-pyqt5-gui-application-shell: done
   1-5-ci-cd-pipeline-github-actions: backlog
   1-6-testing-infrastructure-first-unit-tests: backlog
   1-7-development-environment-documentation: backlog
