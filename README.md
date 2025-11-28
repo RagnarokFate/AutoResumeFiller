@@ -182,11 +182,28 @@ python gui/main.py
 4. Select the `extension/` directory from the project
 5. Extension should load with green checkmark
 
-**Verification:**
+**Verify Extension:**
 - Backend responds at `http://localhost:8765/api/status`
-- GUI opens and shows tabbed interface
 - Extension icon appears in Chrome toolbar
-- Click extension icon → should show "Backend: Connected"
+- Click extension icon → popup shows "Backend: Connected"
+- Navigate to `https://boards.greenhouse.io/embed/job_board`
+- Open DevTools (F12) → Console should show content script logs
+
+**Supported Job Sites:**
+- **Greenhouse:** `*.greenhouse.io/*`
+- **Workday:** `*.workday.com/*`
+- **Lever:** `*.lever.co/*`
+- **LinkedIn:** `www.linkedin.com/jobs/*`
+
+**Troubleshooting Extension:**
+
+| Issue | Solution |
+|-------|----------|
+| Extension won't load | Verify `manifest.json` is valid JSON (use jsonlint.com) |
+| Service worker inactive | Check JavaScript syntax: `node --check extension/background/service-worker.js` |
+| Content script not injecting | Verify URL matches patterns in manifest.json |
+| Popup shows "Disconnected" | Ensure backend is running and CORS configured for `chrome-extension://*` |
+| Icon not displaying | Verify icon files exist: `extension/icons/icon16.png`, etc. |
 
 ---
 

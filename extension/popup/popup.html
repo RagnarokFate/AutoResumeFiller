@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoResumeFiller</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>AutoResumeFiller</h1>
+      <p class="tagline">Intelligent Form Auto-Fill</p>
+    </div>
+    
+    <!-- Backend Status Section -->
+    <div class="status-section">
+      <div class="status-row">
+        <span class="status-label">Backend:</span>
+        <span id="backend-status" class="status-value disconnected">Checking...</span>
+      </div>
+      <div class="status-row">
+        <span class="status-label">Version:</span>
+        <span id="backend-version" class="status-value">—</span>
+      </div>
+    </div>
+    
+    <!-- Actions -->
+    <div class="actions">
+      <button id="open-dashboard" class="btn btn-primary" disabled>
+        <span class="btn-icon">🖥️</span>
+        Open Dashboard
+      </button>
+      <button id="reload-status" class="btn btn-secondary">
+        <span class="btn-icon">🔄</span>
+        Reload Status
+      </button>
+    </div>
+    
+    <!-- Quick Stats (Placeholder for future) -->
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-label">Forms Detected:</span>
+        <span id="forms-detected" class="stat-value">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Auto-Fills:</span>
+        <span id="autofills-count" class="stat-value">0</span>
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p class="version">Extension v<span id="extension-version">1.0.0</span></p>
+      <p class="help-text">Need help? Check <a href="#" id="help-link">docs</a></p>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
