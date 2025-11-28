@@ -1,0 +1,23 @@
+[MASTER]
+py-version=3.9
+ignore=tests,.venv,build,dist,__pycache__
+load-plugins=
+
+[MESSAGES CONTROL]
+max-line-length=100
+disable=
+    C0111,
+    C0103,
+    R0903,
+    W0212
+
+[FORMAT]
+indent-string='    '
+expected-line-ending-format=LF
+
+[DESIGN]
+max-args=7
+max-locals=20
+max-returns=6
+max-branches=15
+max-attributes=12

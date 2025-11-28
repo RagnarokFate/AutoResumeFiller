@@ -1,0 +1,2 @@
+# Backend Python dependencies
+# To be populated in Story 1.2: Python Backend Scaffolding

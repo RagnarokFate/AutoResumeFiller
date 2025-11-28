@@ -1,0 +1,16 @@
+# Release Automation - Placeholder
+# To be implemented in Epic 7: Production Readiness & Distribution
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  placeholder:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Placeholder
+        run: echo "Release automation to be implemented in Epic 7"
