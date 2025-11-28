@@ -2,17 +2,21 @@
 py-version=3.11
 ignore=tests,.venv,build,dist,__pycache__
 load-plugins=
+# Ignore PyQt5 false positives for missing members
+extension-pkg-allow-list=PyQt5
 
 [MESSAGES CONTROL]
 max-line-length=100
 # C0111: missing-docstring
 # C0103: invalid-name (allow short variable names like i, j, k)
+# C0328: unexpected-line-ending-format (Windows CRLF vs Linux LF)
 # R0903: too-few-public-methods (allow simple data classes)
 # W0212: protected-access (allow for testing)
 # W1203: logging-fstring-interpolation (allow f-strings in logs)
 disable=
     C0111,
     C0103,
+    C0328,
     R0903,
     W0212,
     W1203

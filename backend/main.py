@@ -11,21 +11,21 @@ Endpoints:
     GET /docs          - Interactive API documentation (Swagger UI)
     GET /redoc         - API documentation (ReDoc)
 """
+
 import logging
 from datetime import datetime
 from typing import Dict
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 
 from backend.config.settings import settings
 
 # Configure logging
 logging.basicConfig(
     level=getattr(logging, settings.LOG_LEVEL.upper(), logging.INFO),
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 logger = logging.getLogger(__name__)
 
@@ -40,7 +40,7 @@ app = FastAPI(
     version=settings.APP_VERSION,
     docs_url="/docs",
     redoc_url="/redoc",
-    openapi_url="/openapi.json"
+    openapi_url="/openapi.json",
 )
 
 # Configure CORS middleware
@@ -58,7 +58,7 @@ logger.info(f"CORS configured with origins: {settings.CORS_ORIGINS}")
 @app.on_event("startup")
 async def startup_event() -> None:
     """Application startup event handler.
-    
+
     Logs backend initialization and configuration details.
     Future epics will add database connections, AI provider initialization, etc.
     """
@@ -73,7 +73,7 @@ async def startup_event() -> None:
 @app.on_event("shutdown")
 async def shutdown_event() -> None:
     """Application shutdown event handler.
-    
+
     Logs backend shutdown. Future epics will add cleanup tasks
     (close database connections, flush logs, etc.).
     """
@@ -84,7 +84,7 @@ async def shutdown_event() -> None:
 @app.get("/", response_model=Dict[str, str], tags=["Root"])
 async def root() -> Dict[str, str]:
     """Root endpoint providing API information and navigation links.
-    
+
     Returns:
         Dictionary with API name, version, and links to documentation endpoints.
     """
@@ -93,40 +93,40 @@ async def root() -> Dict[str, str]:
         "version": settings.APP_VERSION,
         "docs": "/docs",
         "redoc": "/redoc",
-        "health": "/api/status"
+        "health": "/api/status",
     }
 
 
 @app.get("/api/status", response_model=Dict[str, str], tags=["Health"])
 async def health_check() -> Dict[str, str]:
     """Health check endpoint for system verification.
-    
+
     Used by the GUI dashboard and Chrome Extension to verify backend
     availability. Returns 200 OK if the server is operational.
-    
+
     Returns:
         Dictionary with status ("healthy"), version, and UTC timestamp.
     """
     return {
         "status": "healthy",
         "version": settings.APP_VERSION,
-        "timestamp": datetime.utcnow().isoformat() + "Z"
+        "timestamp": datetime.utcnow().isoformat() + "Z",
     }
 
 
 # Entry point for running with Python directly (development only)
 if __name__ == "__main__":
     import uvicorn
-    
+
     logger.warning(
         "Running with 'python backend/main.py' is for quick testing only. "
         "Use 'uvicorn backend.main:app --reload' for development."
     )
-    
+
     uvicorn.run(
         "backend.main:app",
         host=settings.API_HOST,
         port=settings.API_PORT,
         reload=True,
-        log_level=settings.LOG_LEVEL.lower()
+        log_level=settings.LOG_LEVEL.lower(),
     )
