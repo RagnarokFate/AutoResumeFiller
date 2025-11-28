@@ -35,11 +35,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
           pip install -r gui/requirements.txt
-          pip install pytest pytest-asyncio pytest-cov
       
       - name: Run pytest with coverage
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
-          pytest --cov --cov-report=xml --cov-report=term
+          pytest --cov=backend --cov=gui --cov-report=xml --cov-report=term
       
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v3
@@ -85,7 +86,9 @@ jobs:
         run: pylint gui/ --fail-under=8.0
       
       - name: Mypy type check
-        run: mypy backend/ gui/ --config-file mypy.ini
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: mypy backend/ gui/ --explicit-package-bases --config-file mypy.ini
 
   # Extension validation (JavaScript linting and manifest validation)
   test-extension:
