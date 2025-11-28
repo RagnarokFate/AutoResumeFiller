@@ -1,15 +1,21 @@
 [MASTER]
-py-version=3.9
+py-version=3.11
 ignore=tests,.venv,build,dist,__pycache__
 load-plugins=
 
 [MESSAGES CONTROL]
 max-line-length=100
+# C0111: missing-docstring
+# C0103: invalid-name (allow short variable names like i, j, k)
+# R0903: too-few-public-methods (allow simple data classes)
+# W0212: protected-access (allow for testing)
+# W1203: logging-fstring-interpolation (allow f-strings in logs)
 disable=
     C0111,
     C0103,
     R0903,
-    W0212
+    W0212,
+    W1203
 
 [FORMAT]
 indent-string='    '
@@ -21,3 +27,6 @@ max-locals=20
 max-returns=6
 max-branches=15
 max-attributes=12
+
+# Note: --fail-under=8.0 is enforced in CI workflow command, not in this config file
+# Story 1.5: CI/CD Pipeline enforces minimum score 8.0/10 for all Python code

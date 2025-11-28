@@ -1,5 +1,7 @@
-# CI/CD Pipeline - Placeholder
-# To be implemented in Story 1.5: CI/CD Pipeline - GitHub Actions
+# CI/CD Pipeline - Continuous Integration
+# Story 1.5: CI/CD Pipeline with GitHub Actions
+# Runs automated testing, linting, and type checking on every push
+
 name: CI
 
 on:
@@ -9,9 +11,99 @@ on:
     branches: [ master ]
 
 jobs:
-  placeholder:
+  # Backend testing with pytest and coverage reporting
+  test-backend:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Placeholder
-        run: echo "CI pipeline to be implemented in Story 1.5"
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+          pip install -r gui/requirements.txt
+          pip install pytest pytest-asyncio pytest-cov
+      
+      - name: Run pytest with coverage
+        run: |
+          pytest --cov --cov-report=xml --cov-report=term
+      
+      - name: Upload coverage to codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage.xml
+          flags: backend
+          fail_ci_if_error: false
+        continue-on-error: true
+
+  # Backend code quality checks (formatting, linting, type checking)
+  lint-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      
+      - name: Install linters and dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install black pylint mypy
+          pip install -r backend/requirements.txt
+          pip install -r gui/requirements.txt
+      
+      - name: Black format check
+        run: black --check backend/ gui/
+      
+      - name: Pylint check backend
+        run: pylint backend/ --fail-under=8.0
+      
+      - name: Pylint check GUI
+        run: pylint gui/ --fail-under=8.0
+      
+      - name: Mypy type check
+        run: mypy backend/ gui/ --strict
+
+  # Extension validation (JavaScript linting and manifest validation)
+  test-extension:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install eslint
+        run: npm install -g eslint
+      
+      - name: Lint extension JavaScript
+        run: eslint extension/**/*.js
+      
+      - name: Validate manifest.json
+        run: node -e "JSON.parse(require('fs').readFileSync('extension/manifest.json'))"
+

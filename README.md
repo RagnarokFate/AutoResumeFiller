@@ -2,8 +2,10 @@
 
 **Intelligent job application form auto-filling with AI assistance**
 
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Build Status](https://github.com/RagnarokFate/AutoResumeFiller/actions/workflows/ci.yml/badge.svg)
+![Coverage](https://codecov.io/gh/RagnarokFate/AutoResumeFiller/branch/main/graph/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ---
