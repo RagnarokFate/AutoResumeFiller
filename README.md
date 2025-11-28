@@ -169,11 +169,39 @@ pytest backend/tests/ --cov=backend --cov-report=term-missing
 
 Expected: 9/9 tests passing with >90% coverage on `backend/main.py`
 
-**8. Run GUI (Development)**
+**8. Run Desktop GUI Application**
+
+The PyQt5 desktop application provides a central dashboard for monitoring form-filling activity, managing your data, configuring settings, and interacting with the chatbot.
+
+**Prerequisites:**
+- Backend running on `http://localhost:8765` (see step 6)
+- PyQt5 dependencies installed: `pip install -r gui/requirements.txt`
+
+**Launch GUI:**
 ```bash
-# In a new terminal
 python gui/main.py
 ```
+
+**Expected Behavior:**
+- Window opens within 5 seconds with title "AutoResumeFiller Dashboard"
+- 4 tabs displayed: Monitor, My Data, Settings, Chatbot
+- System tray icon appears in taskbar notification area
+- Status bar shows "Backend: Connected ✅" if backend is running
+
+**Features:**
+- **Minimize to Tray**: Clicking close button (X) minimizes to system tray instead of exiting
+- **Restore from Tray**: Double-click system tray icon to restore window
+- **Exit Application**: Right-click tray icon → "Exit Application" to quit completely
+- **Window Persistence**: Window size, position, and selected tab are remembered between sessions
+
+**Troubleshooting GUI:**
+
+| Issue | Solution |
+|-------|----------|
+| "Backend: Disconnected ❌" | Start backend: `uvicorn backend.main:app --host 127.0.0.1 --port 8765` |
+| No system tray icon | Check taskbar notification area settings (Windows) |
+| Import error: PyQt5 | Install dependencies: `pip install -r gui/requirements.txt` |
+| Window doesn't restore size | Delete QSettings: `reg delete HKEY_CURRENT_USER\Software\AutoResumeFiller /f` (Windows) |
 
 **9. Load Chrome Extension (Development)**
 1. Open Chrome and navigate to `chrome://extensions/`

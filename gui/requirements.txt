@@ -1,2 +1,10 @@
-# GUI Python dependencies
-# To be populated in Story 1.4: PyQt5 GUI Application Shell
+# PyQt5 GUI Framework
+PyQt5==5.15.10
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.13.0
+
+# HTTP Client (simpler alternative to QNetworkAccessManager)
+requests==2.31.0
+
+# Optional: PyQt5 Designer tools (for future UI design)
+# pyqt5-tools==5.15.10.1.3
