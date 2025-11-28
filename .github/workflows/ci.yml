@@ -85,7 +85,7 @@ jobs:
         run: pylint gui/ --fail-under=8.0
       
       - name: Mypy type check
-        run: mypy backend/ gui/ --strict
+        run: mypy backend/ gui/ --config-file mypy.ini
 
   # Extension validation (JavaScript linting and manifest validation)
   test-extension:
@@ -102,7 +102,7 @@ jobs:
         run: npm install -g eslint
       
       - name: Lint extension JavaScript
-        run: eslint extension/**/*.js
+        run: ESLINT_USE_FLAT_CONFIG=false eslint extension/**/*.js
       
       - name: Validate manifest.json
         run: node -e "JSON.parse(require('fs').readFileSync('extension/manifest.json'))"
