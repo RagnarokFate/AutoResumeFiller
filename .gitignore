@@ -4,11 +4,11 @@
 # These directories contain AI agent configurations and workflow orchestration
 # for the BMAD development methodology - not part of the runtime application.
 
-.bmad/                              # BMAD workflow engine and modules
-.agent/                             # Agent configuration files
-.cursor/                            # Cursor IDE rules
-.claude/                            # Claude AI commands
-.gemini/                            # Gemini AI configurations
+.bmad                               # BMAD workflow engine and modules
+.agent                              # Agent configuration files
+.cursor                             # Cursor IDE rules
+.claude                             # Claude AI commands
+.gemini                             # Gemini AI configurations
 .github/copilot-instructions.md     # Copilot agent instructions (keep chatmodes/)
 
 # Workflow status tracking (generated files, not source code)
