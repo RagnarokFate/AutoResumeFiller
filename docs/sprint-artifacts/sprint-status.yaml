@@ -49,14 +49,14 @@ development_status:
 
   # Epic 2: Local Data Management System
   epic-2: contexted
-  2-1-data-schema-definition-json-structure: backlog
-  2-2-file-system-data-manager: backlog
-  2-3-resume-document-parser-pdf-docx: backlog
-  2-4-data-export-backup-functionality: backlog
-  2-5-multiple-resume-cover-letter-version-management: backlog
-  2-6-configuration-management-config-yaml: backlog
-  2-7-conversational-data-update-chatbot-backend: backlog
-  2-8-data-encryption-at-rest: backlog
+  2-1-data-schema-definition-json-structure: drafted
+  2-2-file-system-data-manager: drafted
+  2-3-resume-document-parser-pdf-docx: drafted
+  2-4-data-export-backup-functionality: drafted
+  2-5-multiple-resume-cover-letter-version-management: drafted
+  2-6-configuration-management-config-yaml: drafted
+  2-7-conversational-data-update-chatbot-backend: drafted
+  2-8-data-encryption-at-rest: drafted
   epic-2-retrospective: optional
 
   # Epic 3: AI Provider Integration & Processing
