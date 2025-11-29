@@ -61,14 +61,14 @@ development_status:
 
   # Epic 3: AI Provider Integration & Processing
   epic-3: contexted
-  3-1-ai-provider-abstract-base-class: backlog
-  3-2-openai-provider-implementation: backlog
-  3-3-anthropic-claude-provider-implementation: backlog
-  3-4-google-gemini-provider-implementation: backlog
-  3-5-ai-provider-factory-configuration: backlog
-  3-6-form-question-analysis-response-type-detection: backlog
-  3-7-response-consistency-context-management: backlog
-  3-8-batch-processing-parallel-ai-calls: backlog
+  3-1-ai-provider-abstract-base-class: drafted
+  3-2-openai-provider-implementation: drafted
+  3-3-anthropic-claude-provider-implementation: drafted
+  3-4-google-gemini-provider-implementation: drafted
+  3-5-ai-provider-factory-configuration: drafted
+  3-6-form-question-analysis-response-type-detection: drafted
+  3-7-response-caching-consistency-management: drafted
+  3-8-batch-processing-parallel-ai-calls: drafted
   epic-3-retrospective: optional
 
   # Epic 4: Form Detection & Field Analysis
