@@ -1,0 +1,190 @@
+{
+  "version": "1.0",
+  "last_updated": "2025-11-29T10:00:00.000000",
+  "personal_info": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@example.com",
+    "phone": "+11234567890",
+    "linkedin_url": "https://linkedin.com/in/johndoe",
+    "github_url": "https://github.com/johndoe",
+    "portfolio_url": "https://johndoe.dev",
+    "address": "123 Main St, Apt 4B",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip_code": "94102",
+    "country": "USA"
+  },
+  "education": [
+    {
+      "institution": "Stanford University",
+      "degree": "Bachelor of Science",
+      "field_of_study": "Computer Science",
+      "start_date": "2016-09",
+      "end_date": "2020-06",
+      "gpa": 3.8,
+      "honors": [
+        "Cum Laude",
+        "Dean's List (All Semesters)"
+      ],
+      "relevant_coursework": [
+        "Data Structures and Algorithms",
+        "Machine Learning",
+        "Distributed Systems",
+        "Database Systems"
+      ]
+    },
+    {
+      "institution": "Coursera",
+      "degree": "Professional Certificate",
+      "field_of_study": "Deep Learning Specialization",
+      "start_date": "2021-01",
+      "end_date": "2021-06",
+      "gpa": null,
+      "honors": [],
+      "relevant_coursework": [
+        "Neural Networks and Deep Learning",
+        "Convolutional Neural Networks"
+      ]
+    }
+  ],
+  "work_experience": [
+    {
+      "company": "Google",
+      "position": "Senior Software Engineer",
+      "start_date": "2020-07",
+      "end_date": "Present",
+      "location": "Mountain View, CA",
+      "responsibilities": [
+        "Led development of cloud infrastructure services handling 1M+ requests per second",
+        "Architected and implemented microservices using gRPC and Kubernetes",
+        "Mentored team of 5 junior engineers on best practices and code quality",
+        "Collaborated with product managers to define technical requirements"
+      ],
+      "achievements": [
+        "Reduced API latency by 40% through caching and query optimization",
+        "Increased system throughput by 3x by implementing async processing",
+        "Designed monitoring dashboard reducing incident response time by 60%"
+      ],
+      "technologies": [
+        "Python",
+        "Kubernetes",
+        "Docker",
+        "PostgreSQL",
+        "Redis",
+        "gRPC",
+        "Prometheus",
+        "Grafana"
+      ]
+    },
+    {
+      "company": "Meta",
+      "position": "Software Engineer",
+      "start_date": "2018-06",
+      "end_date": "2020-06",
+      "location": "Menlo Park, CA",
+      "responsibilities": [
+        "Developed backend services for user authentication and authorization",
+        "Implemented RESTful APIs serving 10M+ daily active users",
+        "Participated in on-call rotation and incident response"
+      ],
+      "achievements": [
+        "Migrated authentication system to OAuth 2.0, improving security",
+        "Reduced database query time by 50% through indexing optimization"
+      ],
+      "technologies": [
+        "Python",
+        "Django",
+        "MySQL",
+        "Redis",
+        "RabbitMQ"
+      ]
+    }
+  ],
+  "skills": [
+    "Python",
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Node.js",
+    "FastAPI",
+    "Django",
+    "PostgreSQL",
+    "MongoDB",
+    "Redis",
+    "Docker",
+    "Kubernetes",
+    "AWS",
+    "GCP",
+    "CI/CD",
+    "Git",
+    "Microservices",
+    "RESTful APIs",
+    "GraphQL",
+    "Machine Learning",
+    "TensorFlow",
+    "PyTorch",
+    "Agile/Scrum"
+  ],
+  "projects": [
+    {
+      "name": "AutoResumeFiller",
+      "description": "AI-powered desktop application that automates job application form filling by intelligently extracting information from resumes and generating contextual responses using GPT-4. Reduces application time from 20 minutes to 2 minutes per job.",
+      "start_date": "2024-11",
+      "end_date": "Present",
+      "url": "https://github.com/johndoe/autoresumefiller",
+      "technologies": [
+        "Python",
+        "FastAPI",
+        "React",
+        "OpenAI GPT-4",
+        "PyQt5",
+        "Chrome Extension"
+      ],
+      "highlights": [
+        "Automated 80% of repetitive form filling tasks",
+        "Integrated with 3 AI providers (OpenAI, Anthropic, Google)",
+        "Implemented AES-256-GCM encryption for data security",
+        "Achieved 90%+ field detection accuracy across major ATS platforms"
+      ]
+    },
+    {
+      "name": "Real-Time Chat Application",
+      "description": "Scalable WebSocket-based chat application supporting 10K+ concurrent connections with message persistence and real-time notifications.",
+      "start_date": "2023-03",
+      "end_date": "2023-08",
+      "url": "https://github.com/johndoe/realtime-chat",
+      "technologies": [
+        "Node.js",
+        "Socket.io",
+        "React",
+        "MongoDB",
+        "Redis"
+      ],
+      "highlights": [
+        "Handled 10K+ concurrent WebSocket connections",
+        "Implemented message persistence with MongoDB",
+        "Built real-time typing indicators and read receipts"
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "name": "AWS Certified Solutions Architect - Associate",
+      "issuer": "Amazon Web Services",
+      "date_obtained": "2023-06",
+      "expiration_date": "2026-06",
+      "credential_id": "AWS-SAA-12345",
+      "url": "https://www.credly.com/badges/12345"
+    },
+    {
+      "name": "Certified Kubernetes Administrator (CKA)",
+      "issuer": "Cloud Native Computing Foundation",
+      "date_obtained": "2022-11",
+      "expiration_date": "2025-11",
+      "credential_id": "CKA-67890",
+      "url": "https://www.credly.com/badges/67890"
+    }
+  ],
+  "summary": "Experienced software engineer with 5+ years in backend development and cloud infrastructure. Specialized in building scalable microservices, optimizing distributed systems, and mentoring engineering teams. Passionate about leveraging AI and automation to solve real-world problems. Proven track record of reducing latency, increasing throughput, and delivering high-quality software in fast-paced environments."
+}

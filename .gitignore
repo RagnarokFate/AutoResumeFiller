@@ -76,7 +76,7 @@ coverage.xml
 # =============================================================================
 
 # User data directory (sensitive personal information)
-data/
+/data/
 logs/
 backups/
 
