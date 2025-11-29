@@ -19,6 +19,7 @@ from .schemas import (
 )
 from .user_data_manager import UserDataManager
 from .file_parser import FileParser
+from .data_exporter import DataExporter
 
 __all__ = [
     'PersonalInfo',
@@ -28,5 +29,6 @@ __all__ = [
     'Certification',
     'UserProfile',
     'UserDataManager',
-    'FileParser'
+    'FileParser',
+    'DataExporter'
 ]
