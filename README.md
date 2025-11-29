@@ -5,7 +5,7 @@
 ![Build Status](https://github.com/RagnarokFate/AutoResumeFiller/actions/workflows/ci.yml/badge.svg)
 ![Coverage](https://codecov.io/gh/RagnarokFate/AutoResumeFiller/branch/main/graph/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
+![Python](https://img.shields.io/badge/python-3.9+-blue.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ---
@@ -237,6 +237,406 @@ python gui/main.py
 
 ---
 
+## Troubleshooting
+
+Common issues and solutions for development environment setup.
+
+### Backend Issues
+
+**❌ Issue: Backend won't start - "Address already in use" error**
+
+```
+OSError: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
+```
+
+**✅ Solution:**
+
+Another process is using port 8765. Kill the process or use a different port.
+
+**Find process using port 8765:**
+```bash
+# Windows (PowerShell)
+netstat -ano | findstr :8765
+
+# Unix/macOS
+lsof -i :8765
+```
+
+**Kill process:**
+```bash
+# Windows (PowerShell) - Replace <PID> with process ID from netstat
+Stop-Process -Id <PID> -Force
+
+# Unix/macOS - Replace <PID> with process ID from lsof
+kill -9 <PID>
+```
+
+**Alternative: Use different port:**
+```bash
+uvicorn backend.main:app --reload --host 127.0.0.1 --port 8766
+```
+
+---
+
+**❌ Issue: Import errors - "ModuleNotFoundError: No module named 'fastapi'"**
+
+```
+ModuleNotFoundError: No module named 'fastapi'
+```
+
+**✅ Solution:**
+
+Dependencies not installed or virtual environment not activated.
+
+**Verify virtual environment is activated:**
+```bash
+# Windows (PowerShell) - Should show (venv) prefix in prompt
+# If not activated, run:
+.\venv\Scripts\activate
+
+# Unix/macOS - Should show (venv) prefix in prompt
+# If not activated, run:
+source venv/bin/activate
+```
+
+**Install dependencies:**
+```bash
+pip install -r backend/requirements.txt
+```
+
+**Verify installation:**
+```bash
+python -c "from fastapi import FastAPI; print('FastAPI installed successfully')"
+```
+
+---
+
+**❌ Issue: Health check fails - "Connection refused" or "ERR_CONNECTION_REFUSED"**
+
+**✅ Solution:**
+
+Backend is not running or not listening on correct host/port.
+
+**Verify backend is running:**
+- Check terminal where you ran `uvicorn` command
+- Look for: `Uvicorn running on http://127.0.0.1:8765 (Press CTRL+C to quit)`
+
+**If not running, start backend:**
+```bash
+uvicorn backend.main:app --reload --host 127.0.0.1 --port 8765
+```
+
+**Test health check:**
+```bash
+# Command line
+curl http://localhost:8765/api/status
+
+# Or open in browser
+# http://localhost:8765/api/status
+```
+
+**Expected response:**
+```json
+{"status":"healthy","version":"1.0.0","timestamp":"2025-11-29T12:34:56.789Z"}
+```
+
+---
+
+### Python Environment Issues
+
+**❌ Issue: venv activation fails (Windows) - "Execution policy" error**
+
+```
+.\venv\Scripts\activate : File cannot be loaded because running scripts is disabled on this system
+```
+
+**✅ Solution:**
+
+Windows PowerShell execution policy prevents script execution.
+
+**Fix (Run PowerShell as Administrator):**
+```powershell
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+**Explanation:**
+- `RemoteSigned`: Allows local scripts to run, requires downloaded scripts to be signed
+- `CurrentUser`: Only affects your user account (doesn't require admin for future use)
+
+**Verify fix:**
+```bash
+Get-ExecutionPolicy -Scope CurrentUser
+# Should show: RemoteSigned
+```
+
+**Now activate venv:**
+```bash
+.\venv\Scripts\activate
+```
+
+---
+
+**❌ Issue: pytest command not found**
+
+```
+pytest: The term 'pytest' is not recognized as the name of a cmdlet, function, script file, or operable program.
+```
+
+**✅ Solution:**
+
+pytest not installed in virtual environment.
+
+**Install pytest:**
+```bash
+pip install pytest pytest-cov
+```
+
+**Verify installation:**
+```bash
+pytest --version
+# Should show: pytest 7.4.3 or similar
+```
+
+---
+
+### GUI Issues
+
+**❌ Issue: GUI doesn't show system tray icon**
+
+**✅ Solution:**
+
+Windows notification area settings may be hiding the icon.
+
+**Windows 10/11:**
+1. Right-click taskbar → "Taskbar settings"
+2. Scroll to "Notification area"
+3. Click "Select which icons appear on the taskbar"
+4. Find "AutoResumeFiller" and toggle ON
+
+**Alternative:**
+- Click the "^" arrow in notification area to expand hidden icons
+- Look for AutoResumeFiller icon there
+
+---
+
+**❌ Issue: GUI shows "Backend: Disconnected ❌"**
+
+**✅ Solution:**
+
+Backend is not running or not reachable.
+
+**Verify backend is running:**
+```bash
+# Open new terminal and check health
+curl http://localhost:8765/api/status
+```
+
+**If health check fails, start backend:**
+```bash
+uvicorn backend.main:app --reload --host 127.0.0.1 --port 8765
+```
+
+**If health check succeeds but GUI still shows disconnected:**
+- Restart GUI: Close window (or right-click tray → Exit), then `python gui/main.py`
+- Check firewall settings (ensure localhost connections allowed)
+
+---
+
+**❌ Issue: Import error - "ModuleNotFoundError: No module named 'PyQt5'"**
+
+**✅ Solution:**
+
+GUI dependencies not installed.
+
+**Install GUI dependencies:**
+```bash
+pip install -r gui/requirements.txt
+```
+
+**Verify installation:**
+```bash
+python -c "from PyQt5.QtWidgets import QApplication; print('PyQt5 installed successfully')"
+```
+
+---
+
+### Extension Issues
+
+**❌ Issue: Extension won't load - "Failed to load extension"**
+
+**✅ Solution:**
+
+`manifest.json` may have syntax errors.
+
+**Validate manifest.json:**
+```bash
+# Use JSON validator (online: jsonlint.com)
+# Or use Node.js
+node -e "console.log(JSON.parse(require('fs').readFileSync('extension/manifest.json')))"
+```
+
+**Common errors:**
+- Trailing comma in last object property
+- Missing quotes around property names
+- Invalid JSON structure
+
+**Fix:**
+- Open `extension/manifest.json` in VS Code
+- Check for syntax errors (red underlines)
+- Save file and reload extension in Chrome
+
+---
+
+**❌ Issue: Extension popup shows "Backend: Disconnected"**
+
+**✅ Solution:**
+
+Backend is not running or CORS not configured for extension.
+
+**Verify backend health check:**
+```bash
+curl http://localhost:8765/api/status
+```
+
+**If backend is running, check CORS configuration:**
+
+Open `backend/config/settings.py` and verify:
+```python
+CORS_ORIGINS: str = "chrome-extension://*"  # Should allow all Chrome extensions
+```
+
+**Restart backend after CORS changes:**
+```bash
+# Stop backend (Ctrl+C in terminal)
+# Start backend again
+uvicorn backend.main:app --reload --host 127.0.0.1 --port 8765
+```
+
+**Reload extension:**
+1. Go to `chrome://extensions/`
+2. Click refresh icon for AutoResumeFiller extension
+3. Open extension popup again
+
+---
+
+**❌ Issue: Service worker inactive - "Service worker registration failed"**
+
+**✅ Solution:**
+
+JavaScript syntax error in service worker.
+
+**Check service worker syntax:**
+```bash
+# Validate JavaScript syntax (requires Node.js)
+node --check extension/background/service-worker.js
+```
+
+**Check Chrome extension errors:**
+1. Go to `chrome://extensions/`
+2. Find AutoResumeFiller
+3. Click "Errors" button (if present)
+4. Review error messages
+
+**Common errors:**
+- Syntax error in service-worker.js
+- Missing import or export statements
+- Invalid manifest.json configuration
+
+---
+
+**❌ Issue: Content script not injecting on job sites**
+
+**✅ Solution:**
+
+URL pattern in `manifest.json` doesn't match the page.
+
+**Verify URL matches in manifest.json:**
+
+Open `extension/manifest.json` and check `content_scripts.matches`:
+```json
+"matches": [
+  "*://*.greenhouse.io/*",
+  "*://*.workday.com/*",
+  "*://*.lever.co/*",
+  "*://www.linkedin.com/jobs/*"
+]
+```
+
+**If your test page URL doesn't match:**
+- Add pattern to matches array
+- Reload extension in Chrome
+- Refresh job site page
+
+**Debug content script:**
+1. Open DevTools (F12) on job site
+2. Go to Console tab
+3. Look for content script console.log messages
+4. If no messages, content script not injecting
+
+---
+
+### General Issues
+
+**❌ Issue: Git clone fails - "Permission denied" or "Repository not found"**
+
+**✅ Solution:**
+
+Repository URL is incorrect or access permissions issue.
+
+**Verify repository URL:**
+```bash
+# Check repository exists and is public
+# Visit https://github.com/RagnarokFate/AutoResumeFiller in browser
+```
+
+**If using SSH:**
+```bash
+# Clone with HTTPS instead
+git clone https://github.com/RagnarokFate/AutoResumeFiller.git
+```
+
+---
+
+**❌ Issue: Commands work in terminal but fail in VS Code integrated terminal**
+
+**✅ Solution:**
+
+VS Code terminal may not have virtual environment activated.
+
+**Activate venv in VS Code terminal:**
+```bash
+# Windows (PowerShell)
+.\venv\Scripts\activate
+
+# Unix/macOS
+source venv/bin/activate
+```
+
+**Verify venv is activated:**
+- Prompt should show `(venv)` prefix
+
+**Set default Python interpreter in VS Code:**
+1. Open Command Palette (Ctrl+Shift+P)
+2. Type "Python: Select Interpreter"
+3. Choose `./venv/bin/python` (Unix) or `.\venv\Scripts\python.exe` (Windows)
+
+---
+
+### Still Having Issues?
+
+If you encounter an issue not listed here:
+
+1. **Check existing GitHub Issues:** [GitHub Issues](https://github.com/RagnarokFate/AutoResumeFiller/issues)
+2. **Search for error message:** Copy exact error message and search GitHub Issues
+3. **Open new issue:** If no existing issue found, [open a new issue](https://github.com/RagnarokFate/AutoResumeFiller/issues/new) with:
+   - Operating System (Windows 10, macOS 13, Ubuntu 22.04, etc.)
+   - Python version: `python --version`
+   - Exact error message (copy from terminal)
+   - Steps to reproduce the issue
+   - What you've already tried
+
+---
+
 ## Usage
 
 **Current Status:** Infrastructure setup complete. Feature development in progress.
@@ -267,30 +667,126 @@ pytest --cov --cov-report=html
 open htmlcov/index.html  # View coverage
 ```
 
-### Code Quality
+**Testing Best Practices:**
+- Run tests before committing: `pytest -m unit` (fast, <1 second)
+- Check coverage for modified files: `pytest --cov=backend.main --cov-report=term-missing`
+- Target coverage: >70% for backend modules (currently 100% for main.py and settings.py)
+
+**Test Organization:**
+- Unit tests marked with `@pytest.mark.unit` (test single functions/methods)
+- Integration tests marked with `@pytest.mark.integration` (test component interactions)
+- E2E tests marked with `@pytest.mark.e2e` (test full user workflows)
+
+**Run Specific Tests:**
 ```bash
-# Format code
+# Run specific test file
+pytest backend/tests/test_main.py
+
+# Run specific test class
+pytest backend/tests/test_main.py::TestHealthCheckEndpoint
+
+# Run specific test method
+pytest backend/tests/test_main.py::TestHealthCheckEndpoint::test_health_check_success
+```
+
+**For detailed testing guide, see [backend/tests/README.md](backend/tests/README.md)** (comprehensive guide with fixtures, AAA pattern, parametrized tests, and troubleshooting).
+
+---
+
+### Code Quality
+
+**Code Formatting (Black):**
+```bash
+# Auto-format Python code to PEP 8 style
 black backend/ gui/
 
-# Lint
+# Check formatting without modifying files
+black --check backend/ gui/
+```
+
+Black enforces consistent code style across the project. Configuration in `pyproject.toml` [tool.black] section.
+
+**Static Code Analysis (Pylint):**
+```bash
+# Lint code for errors, code smells, and style issues
 pylint backend/ gui/
 
-# Type checking
-mypy backend/ gui/
+# Lint specific file
+pylint backend/main.py
 ```
+
+Pylint performs static code analysis to catch bugs and enforce coding standards. Configuration in `.pylintrc` file.
+
+**Type Checking (Mypy):**
+```bash
+# Check Python type hints (Python 3.9+ type annotations)
+mypy backend/ gui/
+
+# Check specific file with verbose output
+mypy backend/main.py --show-error-codes
+```
+
+Mypy validates type hints to catch type-related bugs before runtime. Configuration in `pyproject.toml` [tool.mypy] section.
+
+**Pre-Commit Hooks (Optional):**
+```bash
+# Install pre-commit framework
+pip install pre-commit
+
+# Enable pre-commit hooks
+pre-commit install
+
+# Run hooks manually on all files
+pre-commit run --all-files
+```
+
+Pre-commit hooks automatically run black, pylint, and mypy before each commit to ensure code quality.
+
+---
 
 ### Project Structure
+
 ```
 autoresumefiller/
-├── backend/        # FastAPI backend (Python)
-├── gui/            # PyQt5 desktop GUI (Python)
-├── extension/      # Chrome extension (JavaScript)
-├── docs/           # Documentation (PRD, Architecture, Epics)
-├── tests/          # Integration and E2E tests
-└── .github/        # CI/CD workflows
+├── backend/        # FastAPI REST API (Python 3.9+)
+│   ├── api/        # API route handlers
+│   ├── services/   # Business logic services
+│   ├── config/     # Configuration (settings.py)
+│   ├── utils/      # Utility functions
+│   ├── tests/      # Unit tests with pytest
+│   └── main.py     # FastAPI application entry point
+├── gui/            # PyQt5 Desktop Dashboard (Python 3.9+)
+│   ├── windows/    # Main window and dialogs
+│   ├── widgets/    # Custom PyQt5 widgets
+│   ├── services/   # Backend communication services
+│   ├── resources/  # UI resources (icons, styles)
+│   └── main.py     # GUI application entry point
+├── extension/      # Chrome Extension Manifest V3 (JavaScript)
+│   ├── manifest.json   # Extension configuration
+│   ├── background/     # Service worker background script
+│   ├── content/        # Content scripts (form detection)
+│   ├── popup/          # Extension popup UI
+│   └── lib/            # Shared JavaScript libraries
+├── docs/           # Project Documentation
+│   ├── PRD.md             # Product Requirements Document
+│   ├── architecture.md    # System Architecture
+│   ├── epics.md           # Epic Breakdown
+│   └── sprint-artifacts/  # Sprint planning and stories
+├── tests/          # Integration and E2E Tests (future)
+├── .github/        # GitHub Actions CI/CD Workflows
+│   └── workflows/
+│       └── ci.yml  # Continuous Integration pipeline
+└── .bmad/          # BMAD Method v6 (AI-driven agile framework)
 ```
 
-For detailed contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
+**Key Directories:**
+- `backend/`: FastAPI REST API for AI orchestration and data management
+- `gui/`: PyQt5 desktop application for user interface and monitoring
+- `extension/`: Chrome Extension (Manifest V3) for form detection and filling
+- `docs/`: Comprehensive project documentation (PRD, architecture, epics)
+- `.github/workflows/`: CI/CD pipelines with pytest, black, pylint
+
+**For detailed contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).**
 
 ---
 
