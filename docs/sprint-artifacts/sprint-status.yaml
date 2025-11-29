@@ -44,7 +44,7 @@ development_status:
   1-4-pyqt5-gui-application-shell: done
   1-5-ci-cd-pipeline-github-actions: done
   1-6-testing-infrastructure-first-unit-tests: done
-  1-7-development-environment-documentation: review
+  1-7-development-environment-documentation: done
   epic-1-retrospective: optional
 
   # Epic 2: Local Data Management System
